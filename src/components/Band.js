@@ -6,6 +6,7 @@ class Band extends Component {
     super(props);
 
     this.state = {
+      band: this.props.band.id,
       albums: this.props.band.albums || [],
       album: ''
     }
@@ -22,16 +23,12 @@ class Band extends Component {
 
   _addAlbum(event) {
     event.preventDefault();
-    this.props.addAlbum(this.props.band.id, this.state.album);
+    this.props.addAlbum(this.state.band, this.state.album);
     this.setState({album: ''});
   }
 
   render() {
-    // let $albums = [];
-    // if(this.props.band.albums) {
-    //   $albums = this.state.albums.map((album, index)=><Album key={index} album={album}/>);
-    // }
-    let $albums = this.state.albums.map((album, index)=><Album key={index} album={album}/>);
+    let $albums = this.state.albums.map((album, index)=><Album key={index} band={this.state.band} album={album} addTrack={this.props.addTrack}/>);
     return (
       <div>
         <p>
@@ -43,7 +40,7 @@ class Band extends Component {
           <div className="card card-body">
             <form onSubmit={this._addAlbum}>
               <div className="form-group mb-2">
-                <label for="newAlbumInput">Add a New Album</label>
+                <label htmlFor="newAlbumInput">Add a New Album</label>
                 <input id="newAlbumInput" className="form-control" name="album" type="text" placeholder="album name" value={this.state.album} onChange={this._handleInput} required/>
               </div>
               <input className="btn btn-primary mb-2" type="submit" value="Add Album"/>

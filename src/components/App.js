@@ -59,15 +59,21 @@ class App extends Component {
 
     this._addBand = this._addBand.bind(this);
     this._addAlbum = this._addAlbum.bind(this);
+    this._addTrack = this._addTrack.bind(this);
+
+    return;
   }
 
   componentDidMount() {
     this.setState({bands});
+
+    return;
   }
 
   _addBand(name) {
     let id = 1;
-    let bands = this.state.bands;
+    // create shallow copy rather than pointing variable at state
+    let bands = this.state.bands.slice();
     bands.forEach(function(band){
       if(id <= band.id){
         id = band.id + 1;
@@ -76,10 +82,15 @@ class App extends Component {
 
     let band = {id, name, albums: []}
     bands.push(band);
+    // update state
+    this.setState({bands});
+
+    return;
   }
 
   _addAlbum(id, album) {
-    let bands = this.state.bands;
+    // create shallow copy rather than pointing variable at state
+    let bands = this.state.bands.slice();
     bands.forEach(function(band){
       if(band.id === id) {
         if(band.albums) {
@@ -89,16 +100,29 @@ class App extends Component {
         }
       }
     });
+    // update state
+    this.setState({bands});
+
+    return;
   }
 
-  _addTrack() {
+  _addTrack(id, album, track) {
+    let self = this;
+    // create shallow copy rather than pointing variable at state
+    let bands = this.state.bands.slice();
 
+    bands.forEach(function(band){
+      if(band.id === id) {
+        // do stuff ...
+      }
+    });
+    return;
   }
 
   render() {
     return (
       <div className="container">
-        <Bands bands={this.state.bands} addBand={this._addBand} addAlbum={this._addAlbum}/>
+        <Bands bands={this.state.bands} addBand={this._addBand} addAlbum={this._addAlbum} addTrack={this._addTrack}/>
       </div>
     );
   }

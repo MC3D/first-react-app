@@ -26,18 +26,12 @@ class Bands extends Component {
   }
 
   render() {
-    let $bands = this.props.bands.map((band)=><Band key={band.id} band={band} addAlbum={this.props.addAlbum}/>);
-
-    // let $bands = this.props.bands.map(function(band){
-    //   return (
-    //     <Band key={band.id} band={band} addAlbum={this.props.addAlbum}/>
-    //   );
-    // })
+    let $bands = this.props.bands.map((band)=><Band key={band.id} band={band} addAlbum={this.props.addAlbum} addTrack={this.props.addTrack}/>);
     return (
       <div>
         <form onSubmit={this._addBand}>
           <div className="form-group mb-2">
-            <label for="newBandInput">Add a New Band</label>
+            <label htmlFor="newBandInput">Add a New Band</label>
             <input id="newBandInput" className="form-control" name="band" value={this.state.band} type="text" placeholder="band name" onChange={this._handleInput} required/>
           </div>
           <input className="btn btn-primary mb-2" type="submit" value="Add Band"/>
